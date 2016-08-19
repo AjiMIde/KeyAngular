@@ -1,0 +1,106 @@
+﻿<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <link rel="stylesheet" type="text/css" href="../resources/public/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="../resources/public/keyCommon/key.css">
+
+    <script type="text/javascript" src="../resources/public/angularjs/angular.js"></script>
+    <script type="text/javascript" src="../resources/public/angularjs/angular-animate.js"></script>
+    <link rel="stylesheet" href="../resources/public/keyCommon/key.js">
+
+    <title>ng-form-use</title>
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function ($scope) {
+            console.log(s=$scope);
+            $scope.reset = function () {
+                $scope.formData = {};
+            }
+            $scope.submit = function () {
+                console.log(f = $scope.formData);
+            }
+            $scope.setValue = function(){
+                $scope.formData = {
+                    AccountSuffix : "@1001",
+                    SerialNo : "DR0265Mn",
+                    SmsRegURL : "http:///158.58.12.32/sms",
+                    SolutionName : "Hna-mljc",
+                    pregmatchSelection : "2",
+                    tipEmail : "513688748@qq.com"
+                }
+            }
+        });
+
+    </script>
+    <style>
+        th {
+            font-weight: bold;
+        }
+
+        label {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+<div class="container" ng-app="myApp">
+
+    <div class="row" ng-controller="myCtrl">
+        <form action="" role='form' class="form-horizontal" name='addProgramForm' novalidate>
+            <div class="form-group">
+                <label class='col-md-2 control-label'>方案名</label>
+
+                <div class="col-md-8">
+                    <input type="text" class='form-control' name="SolutionName" ng-model='formData.SolutionName' required>
+                </div>
+                <span class="col-md-2" ng-show="addProgramForm.SolutionName.$dirty && addProgramForm.SolutionName.$error.required">必须的。</span>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">匹配方式</label>
+
+                <div class="col-md-8">
+                    <input type="text" class='form-control' name="pregmatchSelection" ng-model='formData.pregmatchSelection' required>
+                </div>
+                <span class="col-md-2" ng-show="addProgramForm.pregmatchSelection.$error.required">必须的。</span>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">邮箱告警</label>
+                <div class="col-md-8"><input class='form-control' name="tipEmail" type="email" ng-model='formData.tipEmail'></div>
+                <span class="col-md-2" ng-show="addProgramForm.tipEmail.$error.email">错误邮箱</span>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">后缀</label>
+
+                <div class="col-md-8">
+                    <input type="text" class='form-control' ng-model='formData.AccountSuffix' required>
+                </div>
+                <div class="col-md-8 col-md-offset-2" ng-show="addProgramForm.AccountSuffix.$error.required"></div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">机器编号</label>
+
+                <div class="col-md-8">
+                    <input type="text" class='form-control' ng-model='formData.SerialNo'>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">短信地址</label>
+
+                <div class="col-md-8">
+                    <input type="text" class='form-control' ng-model='formData.SmsRegURL'>
+                </div>
+            </div>
+            <div style="text-align:right;">
+                <button type='button' class="btn btn-default" ng-click='submit()'
+                        ng-disabled="addProgramForm.SolutionName.$invalid || addProgramForm.pregmatchSelection.$invalid">确定
+                </button>
+                <button type='button' class="btn btn-default" ng-click='setValue()'>设值</button>
+                <button type='button' class="btn btn-default" ng-click='reset()'>重置</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,75 @@
+﻿<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <link rel="stylesheet" type="text/css" href="../resources/public/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="../resources/public/keyCommon/key.css">
+
+    <script type="text/javascript" src="../resources/public/angularjs/angular.js"></script>
+    <script type="text/javascript" src="../resources/public/angularjs/angular-animate.js"></script>
+    <link rel="stylesheet" href="../resources/public/keyCommon/key.js">
+
+    <title>ng-http/get/post/ajax</title>
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function ($scope, $http) {
+            $http.get("../services/index.php?action=getData").success(function (response) {
+                $scope.data = response;
+            });
+
+            $scope.post = function(){
+                var newData = $scope.new || {};
+                $http.post('../services/index.php?action=postData', {
+                    'newData': newData
+                }).success(function(response) {
+                    $scope.response = response;
+                });
+            }
+        });
+
+    </script>
+    <style>
+        span{
+            width: 100px;
+            display: inline-block;
+            border: 1px solid #080808;
+        }
+    </style>
+</head>
+<body>
+<div class="container" ng-app="myApp">
+    <div class="row" ng-controller="myCtrl">
+        <h5>下面是简单的 $http.get 从后台获取数据并显示。</h5>
+        <div class="col-md-12">
+            <div ng-repeat="(key,value) in data">
+                <span>{{value.name}}</span>
+                <span>{{value.count}}</span>
+                <span>{{value.square}}</span>
+            </div>
+        </div>
+
+        <h5>下面做一个简单的提交，以及提交之后的获取（并返回）</h5>
+        <input type="text" class="form-control" ng-model="new.name" placeholder="name">
+        <input type="text" class="form-control" ng-model="new.count" placeholder="count">
+        <input type="text" class="form-control" ng-model="new.square" placeholder="square">
+        <button class="btn btn-default" type="button" ng-click="post()">提交</button>
+        <div>回调中。。{{response}}</div>
+
+        <h5>上面的Http提交方式，在后台获取参数时会跟平时的 jquery ajax 有差别，下面模拟一个 jQuery ajax 提交，实际操作要看代码。</h5>
+        <button class="btn btn-default" type="button" ng-click="post()">提交</button>
+        <div>回调中。。{{response}}</div>
+        http://www.yiibai.com/angularjs/angularjs_quick_guide.html
+        https://www.google.com.hk/?gws_rd=ssl#newwindow=1&safe=strict&q=angularjs+%E5%AE%9E%E4%BE%8B
+        https://checkcheckzz.gitbooks.io/angularjs-learning-notes/content/chapter3/chapter3.html
+        http://blog.jobbole.com/48979/
+        http://tutorialzine.com/2013/08/learn-angularjs-5-examples/
+        https://segmentfault.com/q/1010000002405242
+        http://127.0.0.1:8090/KeyAngular/demo/ng-http.html
+
+
+    </div>
+
+</div>
+</body>
+</html>
