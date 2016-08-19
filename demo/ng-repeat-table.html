@@ -1,0 +1,77 @@
+﻿<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <link rel="stylesheet" type="text/css" href="../resources/public/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="../resources/public/keyCommon/key.css">
+
+    <script type="text/javascript" src="../resources/public/angularjs/angular.js"></script>
+    <script type="text/javascript" src="../resources/public/angularjs/angular-animate.js"></script>
+    <link rel="stylesheet" href="../resources/public/keyCommon/key.js">
+
+    <title>ng-repeat/filter/orderBy</title>
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function ($scope) {
+            $scope.data=[
+                { name:'Hna-hhds', verifyType:'vlan',checkUp:'1',account:'@1001' },
+                { name:'Hna-mzl', verifyType:'ip',checkUp:'2',account:'@1021' },
+                { name:'Hna-tyjc', verifyType:'areaID',checkUp:'1',account:'@1033' },
+                { name:'Hna-whgj', verifyType:'ssid',checkUp:'0',account:'@1044' },
+                { name:'Hna-hhds', verifyType:'vlan',checkUp:'1',account:'@1001' },
+                { name:'Hna-hhds', verifyType:'vlan',checkUp:'1',account:'@1001' },
+                { name:'Hna-mzl', verifyType:'ip',checkUp:'2',account:'@1021' },
+                { name:'Hna-tyjc', verifyType:'areaID',checkUp:'1',account:'@1033' },
+                { name:'Hna-whgj', verifyType:'ssid',checkUp:'0',account:'@1044' },
+                { name:'Hna-mzl', verifyType:'ip',checkUp:'2',account:'@1021' },
+                { name:'Hna-tyjc', verifyType:'areaID',checkUp:'1',account:'@1033' },
+                { name:'Hna-whgj', verifyType:'ssid',checkUp:'0',account:'@1044' }
+            ];
+            $scope.sentUp = function(key,value){
+                confirm('You will sent up the program ' + value.name + ' at: ' + (key+1) + ' , do it?!');
+            }
+        });
+
+    </script>
+    <style>
+        th{
+            font-weight: bold;
+        }
+        label{
+            font-size:16px;
+        }
+    </style>
+</head>
+<body>
+<div class="container" ng-app="myApp">
+    <div class="row" ng-controller="myCtrl">
+        <div class="col-md-12" style="padding: 10px 0 0 0;">
+            <input type="text" class='form-control' ng-model='filterA' placeholder="过滤器">
+        </div>
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>方案名</th>
+                <th>认证方式</th>
+                <th>账号后缀</th>
+                <th>审核</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="(key,value) in data | filter: filterA | orderBy: 'account'">
+                <td>{{key+1}}</td>
+                <td>{{value.name}}</td>
+                <td>{{value.verifyType}}</td>
+                <td>{{value.account}}</td>
+                <td>{{value.checkUp}}</td>
+                <td><button class="btn btn-default" type="button" ng-click="sentUp(key,value)">发布</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
