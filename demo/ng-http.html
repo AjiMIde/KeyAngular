@@ -25,6 +25,29 @@
                 }).success(function(response) {
                     $scope.response = response;
                 });
+            };
+
+            //处理post 的一种方案：
+            var httpHeader = {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                },
+                transformRequest: function(data) {
+                    var s = "";
+                    for (var o in data) {
+                        s = s + o + "=" + data[o] + '&';
+                    }
+                    s = s.slice(0, s.length - 1);
+                    return s;
+                }
+            };
+
+            $scope.post_ajax = function(){
+                $http.post('../services/index.php?action=postData_ajax',
+                        $scope.new,
+                httpHeader).success(function(response){
+                    $scope.response_ajax = response;
+                });
             }
         });
 
@@ -57,15 +80,10 @@
         <div>回调中。。{{response}}</div>
 
         <h5>上面的Http提交方式，在后台获取参数时会跟平时的 jquery ajax 有差别，下面模拟一个 jQuery ajax 提交，实际操作要看代码。</h5>
-        <button class="btn btn-default" type="button" ng-click="post()">提交</button>
-        <div>回调中。。{{response}}</div>
-        http://www.yiibai.com/angularjs/angularjs_quick_guide.html
-        https://www.google.com.hk/?gws_rd=ssl#newwindow=1&safe=strict&q=angularjs+%E5%AE%9E%E4%BE%8B
-        https://checkcheckzz.gitbooks.io/angularjs-learning-notes/content/chapter3/chapter3.html
-        http://blog.jobbole.com/48979/
-        http://tutorialzine.com/2013/08/learn-angularjs-5-examples/
-        https://segmentfault.com/q/1010000002405242
-        http://127.0.0.1:8090/KeyAngular/demo/ng-http.html
+        <button class="btn btn-default" type="button" ng-click="post_ajax()">提交</button>
+        <div>回调中。。{{response_ajax}}</div>
+
+
 
 
     </div>

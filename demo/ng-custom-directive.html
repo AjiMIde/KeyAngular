@@ -1,0 +1,68 @@
+﻿<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <link rel="stylesheet" type="text/css" href="../resources/public/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="../resources/public/keyCommon/key.css">
+
+    <script type="text/javascript" src="../resources/public/angularjs/angular.js"></script>
+    <script type="text/javascript" src="../resources/public/angularjs/angular-animate.js"></script>
+    <link rel="stylesheet" href="../resources/public/keyCommon/key.js">
+
+    <title>ng custom directive</title>
+    <script>
+        var app = angular.module('myApp', []);
+        app.directive('student', function() {
+            var directive = {};
+            directive.restrict = 'E';
+            directive.template = "Student: <b>{{student.name}}</b> , Roll No: <b>{{student.rollno}}</b>";
+
+            directive.scope = {
+                student : "=name"
+            }
+
+            directive.compile = function(element, attributes) {
+                element.css("border", "1px solid #cccccc");
+
+                var linkFunction = function($scope, element, attributes) {
+                    element.html("Student: <b>"+$scope.student.name +"</b> , Roll No: <b>"+$scope.student.rollno+"</b><br/>");
+                    element.css("background-color", "#ff00ff");
+                }
+
+                return linkFunction;
+            }
+
+            return directive;
+        });
+        app.controller('myCtrl', function ($scope, $http) {
+            $scope.Mahesh = {};
+            $scope.Mahesh.name = "Mahesh Parashar";
+            $scope.Mahesh.rollno  = 1;
+
+            $scope.Piyush = {};
+            $scope.Piyush.name = "Piyush Parashar";
+            $scope.Piyush.rollno  = 2;
+        });
+
+    </script>
+    <style>
+
+    </style>
+
+</head>
+<body>
+<div class="container" ng-app="myApp">
+    <div class="row" ng-controller="myCtrl">
+        <h6>自定义指令中使用AngularJS扩展HTML的功能。自定义指令使用的“指令”的功能定义。自定义指令只是替换了它被激活的元素。</h6>
+        <h6>引导过程中AngularJS应用程序找到了匹配的元素，并做好使用自定义指令compile()方法一次活动再处理使用基于指令的范围自定义指令link()方法的元素。</h6>
+        <h6>AngularJS提供支持，以下列元素的类型来创建自定义指令。Element/Attribute/CSS/Comment</h6>
+        <div class="col-md-12">
+            <student name="Mahesh"></student><br/>
+            <student name="Piyush"></student>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

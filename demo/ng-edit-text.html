@@ -1,0 +1,131 @@
+﻿<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <link rel="stylesheet" type="text/css" href="../resources/public/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="../resources/public/keyCommon/key.css">
+
+    <script type="text/javascript" src="../resources/public/angularjs/angular.js"></script>
+    <script type="text/javascript" src="../resources/public/angularjs/angular-animate.js"></script>
+    <link rel="stylesheet" href="../resources/public/keyCommon/key.js">
+
+    <title>ng-edit-text-field</title>
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function ($scope, $http) {
+            $scope.showmyTooltip = false;
+            $scope.value = 'Edit me.';
+
+            $scope.hidemyTooltip = function () {
+                $scope.showmyTooltip = false;
+            }
+
+            $scope.togglemyTooltip = function (e) {
+                e.stopPropagation();
+                $scope.showmyTooltip = !$scope.showmyTooltip;
+            }
+        });
+
+    </script>
+    <style>
+      #main{
+            height:300px;
+            position:relative;
+            padding-top: 150px;
+          text-align: center;
+        }
+
+        .myTooltip {
+            background-color: #5c9bb7;
+
+            background-image: -webkit-linear-gradient(top, #5c9bb7, #5392ad);
+            background-image: -moz-linear-gradient(top, #5c9bb7, #5392ad);
+            background-image: linear-gradient(top, #5c9bb7, #5392ad);
+
+            box-shadow: 0 1px 1px #ccc;
+            border-radius: 3px;
+            width: 290px;
+            padding: 10px;
+
+            position: absolute;
+            left: 50%;
+            margin-left: -150px;
+            top: 80px;
+        }
+
+        .myTooltip:after {
+            /* The tip of the myTooltip */
+            content: '';
+            position: absolute;
+            border: 6px solid #5190ac;
+            border-color: #5190ac transparent transparent;
+            width: 0;
+            height: 0;
+            bottom: -12px;
+            left: 50%;
+            margin-left: -6px;
+        }
+
+        .myTooltip input {
+            border: none;
+            width: 100%;
+            line-height: 34px;
+            border-radius: 3px;
+            box-shadow: 0 2px 6px #bbb inset;
+            text-align: center;
+            font-size: 16px;
+            font-family: inherit;
+            color: #8d9395;
+            font-weight: bold;
+            outline: none;
+        }
+
+        p {
+            font-size: 22px;
+            font-weight: bold;
+            color: #6d8088;
+            height: 30px;
+            cursor: default;
+        }
+
+        p b {
+            color: #ffffff;
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #c4d7e0;
+            border-radius: 2px;
+            text-transform: uppercase;
+            font-size: 18px;
+        }
+
+        p:before {
+            content: '✎';
+            display: inline-block;
+            margin-right: 5px;
+            font-weight: normal;
+            vertical-align: text-bottom;
+        }
+
+    </style>
+</head>
+<body ng-app="myApp">
+<div id="main" ng-controller="myCtrl" ng-click="hidemyTooltip()">
+
+    <!-- This is the myTooltip. It is shown only when the showmyTooltip variable is truthful -->
+    <div class="myTooltip" ng-click="$event.stopPropagation()" ng-show="showmyTooltip">
+
+        <!-- ng-model binds the contents of the text field with the "value" model.
+         Any changes to the text field will automatically update the value, and
+         all other bindings on the page that depend on it.  -->
+        <input type="text" ng-model="value"/>
+    </div>
+
+    <!-- Call a method defined in the InlineEditorController that toggles
+     the showmyTooltip variable -->
+    <p ng-click="togglemyTooltip($event)">{{value}}</p>
+
+</div>
+
+</body>
+</html>

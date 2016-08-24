@@ -1,0 +1,79 @@
+﻿<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <link rel="stylesheet" type="text/css" href="../resources/public/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="../resources/public/keyCommon/key.css">
+
+    <script type="text/javascript" src="../resources/public/angularjs/angular.js"></script>
+    <script type="text/javascript" src="../resources/public/angularjs/angular-animate.js"></script>
+    <link rel="stylesheet" href="../resources/public/keyCommon/key.js">
+
+    <title>ng-click-list ng-class</title>
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function ($scope, $http) {
+            $scope.data = [
+                {name: 'Hna-hhds', verifyType: 'vlan', checkUp: '1', account: '@1001'},
+                {name: 'Hna-mzl', verifyType: 'ip', checkUp: '2', account: '@1021'},
+                {name: 'Hna-tyjc', verifyType: 'areaID', checkUp: '1', account: '@1033'}
+            ]
+            $scope.toggleActive = function(value){
+                value.active = !value.active
+            };
+            $scope.count = function(){
+                var total = "";
+                // Use the angular forEach helper method to
+                // loop through the services array:
+                angular.forEach($scope.data, function(s){
+                    if (s.active){
+                        total = total + s.name + ' , ';
+                    }
+                });
+
+                return total;
+            };
+
+
+
+        });
+
+    </script>
+    <style>
+        table tbody tr.active td{
+            background: transparent !important;
+        }
+        table tbody tr.active{
+            background: #beffe7 !important;
+        }
+
+    </style>
+
+</head>
+<body>
+<div class="container" ng-app="myApp">
+    <div class="row" ng-controller="myCtrl">
+        <div class="col-md-12">你选择了：{{count()}}</div><!--管道过滤-->
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>方案名</th>
+                <th>认证方式</th>
+                <th>账号后缀</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="(key,value) in data" ng-class="{active:value.active}" ng-click="toggleActive(value)">
+                <td>{{key+1}}</td>
+                <td>{{value.name}}</td>
+                <td>{{value.verifyType}}</td>
+                <td>{{value.account}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

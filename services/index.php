@@ -29,6 +29,8 @@ if($action == 'getData'){
 }elseif($action == 'postData'){
     $params = json_decode(file_get_contents('php://input'),true);
     echo json_encode($params);
+}elseif($action == 'postData_ajax'){
+    echo $_REQUEST['name'] . $_REQUEST['count'] . $_REQUEST['square'];
 }else{
     echo 'no data';
 }
